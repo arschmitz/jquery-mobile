@@ -1,5 +1,3 @@
-# SECUTRITY TEST
-
 # jQuery Mobile [![Build Status](https://travis-ci.org/jquery/jquery-mobile.png?branch=master)](https://travis-ci.org/jquery/jquery-mobile) [![Coverage Status](https://coveralls.io/repos/jquery/jquery-mobile/badge.png?branch=master)](https://coveralls.io/r/jquery/jquery-mobile?branch=master)
 
 This is the main repository for the jQuery Mobile project. From the [official website](http://jquerymobile.com):
