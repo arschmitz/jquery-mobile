@@ -3,17 +3,17 @@
 //>>label: All Transitions
 //>>group: Transitions
 
-define( [
-	"./visuals/flip",
-	"./visuals/flow",
-	"./visuals/pop",
-	"./visuals/slide",
-	"./visuals/slidedown",
-	"./visuals/slidefade",
-	"./visuals/slideup",
-	"./visuals/turn"
+define([
+  "./visuals/flip",
+  "./visuals/flow",
+  "./visuals/pop",
+  "./visuals/slide",
+  "./visuals/slidedown",
+  "./visuals/slidefade",
+  "./visuals/slideup",
+  "./visuals/turn"
 ], function() {
-//>>excludeEnd("jqmBuildExclude");
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  //>>excludeEnd("jqmBuildExclude");
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

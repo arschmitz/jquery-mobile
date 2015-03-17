@@ -50,7 +50,10 @@
 		"optimist": "0.6.0",
 		"requirejs": "2.1.8",
 		"underscore": "1.5.2",
-		"xmlhttprequest": "1.6.0"
+		"xmlhttprequest": "1.6.0",
+		"esformatter": "git://github.com/millermedeiros/esformatter.git",
+		"grunt-esformatter": "0.2.5",
+		"esformatter-jquery-chain": "1.0.0"
 	},
 	"main": "Gruntfile.js",
 	"engines": {

@@ -5,24 +5,24 @@
 //>>css.structure: ../css/structure/jquery.mobile.accordion.css
 //>>css.theme: ../css/themes/default/jquery.mobile.theme.css
 
-define( [
-	"jquery",
-	"jquery-ui/widget",
-	"widget.theme",
-	"jquery-ui/accordion"
-], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+define([
+  "jquery",
+  "jquery-ui/widget",
+  "widget.theme",
+  "jquery-ui/accordion"
+], function(jQuery) {
+  //>>excludeEnd("jqmBuildExclude");
+  (function($, undefined) {
 
-$.widget( "ui.accordion", $.ui.accordion, {
-	options: {
-		theme: null
-	}
-});
+    $.widget("ui.accordion", $.ui.accordion, {
+      options: {
+        theme: null
+      }
+    });
 
-$.widget( "ui.accordion", $.ui.accordion, $.mobile.widget.theme );
+    $.widget("ui.accordion", $.ui.accordion, $.mobile.widget.theme);
 
-})(jQuery);
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  })(jQuery);
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

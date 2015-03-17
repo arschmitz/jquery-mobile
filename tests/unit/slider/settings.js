@@ -1,3 +1,3 @@
-$( document ).bind( "mobileinit", function() {
-	$.mobile.textinput.prototype.options.clearBtn = true;
+$(document).bind("mobileinit", function() {
+  $.mobile.textinput.prototype.options.clearBtn = true;
 });

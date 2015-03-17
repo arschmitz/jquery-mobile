@@ -2,8 +2,8 @@
 //>>group: exclude
 
 define([
-	"./defaults",
-	"./data",
-	"./helpers"
+  "./defaults",
+  "./data",
+  "./helpers"
 ], function() {});
 //>>excludeEnd("jqmBuildExclude");

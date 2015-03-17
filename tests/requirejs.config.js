@@ -1,5 +1,5 @@
 requirejs.config({
-	"paths": {
-		"tests": "../tests"
-	}
+  "paths": {
+    "tests": "../tests"
+  }
 });

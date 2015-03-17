@@ -3,32 +3,32 @@
 //>>label: Transition Serial
 //>>group: Transitions
 
-define( [ "jquery", "../animationComplete", "./transition" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
+define(["jquery", "../animationComplete", "./transition"], function(jQuery) {
+  //>>excludeEnd("jqmBuildExclude");
 
-(function( $ ) {
+  (function($) {
 
-	$.mobile.SerialTransition = function() {
-		this.init.apply(this, arguments);
-	};
+    $.mobile.SerialTransition = function() {
+      this.init.apply(this, arguments);
+    };
 
-	$.extend($.mobile.SerialTransition.prototype, $.mobile.Transition.prototype, {
-		sequential: true,
+    $.extend($.mobile.SerialTransition.prototype, $.mobile.Transition.prototype, {
+      sequential: true,
 
-		beforeDoneOut: function() {
-			if ( this.$from ) {
-				this.cleanFrom();
-			}
-		},
+      beforeDoneOut: function() {
+        if (this.$from) {
+          this.cleanFrom();
+        }
+      },
 
-		beforeStartOut: function( screenHeight, reverseClass, none ) {
-			this.$from.animationComplete($.proxy(function() {
-				this.doneOut( screenHeight, reverseClass, none );
-			}, this ));
-		}
-	});
+      beforeStartOut: function(screenHeight, reverseClass, none) {
+        this.$from.animationComplete($.proxy(function() {
+          this.doneOut(screenHeight, reverseClass, none);
+        }, this));
+      }
+    });
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  })(jQuery);
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

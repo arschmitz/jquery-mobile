@@ -3,55 +3,55 @@
 //>>label: First & Last Classes
 //>>group: Widgets
 
-define( [ "jquery", "../core" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+define(["jquery", "../core"], function(jQuery) {
+  //>>excludeEnd("jqmBuildExclude");
+  (function($, undefined) {
 
-var uiScreenHiddenRegex = /\bui-screen-hidden\b/;
-function noHiddenClass( elements ) {
-	var index,
-		length = elements.length,
-		result = [];
+    var uiScreenHiddenRegex = /\bui-screen-hidden\b/;
+    function noHiddenClass(elements) {
+      var index,
+        length = elements.length,
+        result = [];
 
-	for ( index = 0; index < length; index++ ) {
-		if ( !elements[ index ].className.match( uiScreenHiddenRegex ) ) {
-			result.push( elements[ index ] );
-		}
-	}
+      for (index = 0; index < length; index++) {
+        if (!elements[index].className.match(uiScreenHiddenRegex)) {
+          result.push(elements[index]);
+        }
+      }
 
-	return $( result );
-}
+      return $(result);
+    }
 
-$.mobile.behaviors.addFirstLastClasses = {
-	_getVisibles: function( $els, create ) {
-		var visibles;
+    $.mobile.behaviors.addFirstLastClasses = {
+      _getVisibles: function($els, create) {
+        var visibles;
 
-		if ( create ) {
-			visibles = noHiddenClass( $els );
-		} else {
-			visibles = $els.filter( ":visible" );
-			if ( visibles.length === 0 ) {
-				visibles = noHiddenClass( $els );
-			}
-		}
+        if (create) {
+          visibles = noHiddenClass($els);
+        } else {
+          visibles = $els.filter(":visible");
+          if (visibles.length === 0) {
+            visibles = noHiddenClass($els);
+          }
+        }
 
-		return visibles;
-	},
+        return visibles;
+      },
 
-	_addFirstLastClasses: function( $els, $visibles, create ) {
-		$els.removeClass( "ui-first-child ui-last-child" );
-		$visibles.eq( 0 ).addClass( "ui-first-child" ).end().last().addClass( "ui-last-child" );
-		if ( !create ) {
-			this.element.trigger( "updatelayout" );
-		}
-	},
+      _addFirstLastClasses: function($els, $visibles, create) {
+        $els.removeClass("ui-first-child ui-last-child");
+        $visibles.eq(0).addClass("ui-first-child").end().last().addClass("ui-last-child");
+        if (!create) {
+          this.element.trigger("updatelayout");
+        }
+      },
 
-	_removeFirstLastClasses: function( $els ) {
-		$els.removeClass( "ui-first-child ui-last-child" );
-	}
-};
+      _removeFirstLastClasses: function($els) {
+        $els.removeClass("ui-first-child ui-last-child");
+      }
+    };
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  })(jQuery);
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

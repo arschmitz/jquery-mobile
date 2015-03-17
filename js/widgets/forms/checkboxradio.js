@@ -6,35 +6,35 @@
 //>>css.theme: ../css/themes/default/jquery.mobile.theme.css
 
 define([
-	"jquery",
-	"../../core",
-	"../../widget",
-	"jquery-ui/checkboxradio",
-	"../widget.theme"
-	], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+  "jquery",
+  "../../core",
+  "../../widget",
+  "jquery-ui/checkboxradio",
+  "../widget.theme"
+], function(jQuery) {
+  //>>excludeEnd("jqmBuildExclude");
+  (function($, undefined) {
 
-$.widget( "ui.checkboxradio", $.ui.checkboxradio, {
-	initSelector: "input[type='radio'],input[type='checkbox']:not(:jqmData(role='flipswitch'))",
+    $.widget("ui.checkboxradio", $.ui.checkboxradio, {
+      initSelector: "input[type='radio'],input[type='checkbox']:not(:jqmData(role='flipswitch'))",
 
-	options: {
-		enhanced: false,
-		theme: "inherit"
-	},
+      options: {
+        enhanced: false,
+        theme: "inherit"
+      },
 
-	_enhance: function() {
-		if ( !this.options.enhanced ) {
-			this._super();
-		} else if ( this.options.icon ) {
-			this.icon = this.element.find( "ui-button-icon" );
-		}
-	}
-});
+      _enhance: function() {
+        if (!this.options.enhanced) {
+          this._super();
+        } else if (this.options.icon) {
+          this.icon = this.element.find("ui-button-icon");
+        }
+      }
+    });
 
-$.widget( "ui.checkboxradio", $.ui.checkboxradio, $.mobile.widget.theme );
+    $.widget("ui.checkboxradio", $.ui.checkboxradio, $.mobile.widget.theme);
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  })(jQuery);
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

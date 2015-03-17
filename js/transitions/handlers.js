@@ -3,40 +3,40 @@
 //>>label: Transition Handlers
 //>>group: Transitions
 
-define( ["jquery", "../core", "./serial", "./concurrent"], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
+define(["jquery", "../core", "./serial", "./concurrent"], function(jQuery) {
+  //>>excludeEnd("jqmBuildExclude");
 
-(function( $ ) {
+  (function($) {
 
-	// generate the handlers from the above
-	var defaultGetMaxScrollForTransition = function() {
-		return $.mobile.getScreenHeight() * 3;
-	};
+    // generate the handlers from the above
+    var defaultGetMaxScrollForTransition = function() {
+      return $.mobile.getScreenHeight() * 3;
+    };
 
-	//transition handler dictionary for 3rd party transitions
-	$.mobile.transitionHandlers = {
-		"sequential": $.mobile.SerialTransition,
-		"simultaneous": $.mobile.ConcurrentTransition
-	};
+    //transition handler dictionary for 3rd party transitions
+    $.mobile.transitionHandlers = {
+      "sequential": $.mobile.SerialTransition,
+      "simultaneous": $.mobile.ConcurrentTransition
+    };
 
-	// Make our transition handler the public default.
-	$.mobile.defaultTransitionHandler = $.mobile.transitionHandlers.sequential;
+    // Make our transition handler the public default.
+    $.mobile.defaultTransitionHandler = $.mobile.transitionHandlers.sequential;
 
-	$.mobile.transitionFallbacks = {};
+    $.mobile.transitionFallbacks = {};
 
-	// If transition is defined, check if css 3D transforms are supported, and if not, if a fallback is specified
-	$.mobile._maybeDegradeTransition = function( transition ) {
-		if ( transition && !$.support.cssTransform3d && $.mobile.transitionFallbacks[ transition ] ) {
-			transition = $.mobile.transitionFallbacks[ transition ];
-		}
+    // If transition is defined, check if css 3D transforms are supported, and if not, if a fallback is specified
+    $.mobile._maybeDegradeTransition = function(transition) {
+      if (transition && !$.support.cssTransform3d && $.mobile.transitionFallbacks[transition]) {
+        transition = $.mobile.transitionFallbacks[transition];
+      }
 
-		return transition;
-	};
+      return transition;
+    };
 
-	// Set the getMaxScrollForTransition to default if no implementation was set by user
-	$.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defaultGetMaxScrollForTransition;
+    // Set the getMaxScrollForTransition to default if no implementation was set by user
+    $.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defaultGetMaxScrollForTransition;
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  })(jQuery);
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

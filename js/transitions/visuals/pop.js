@@ -8,13 +8,13 @@
 //>>group: Transitions
 //>>css.structure: ../css/structure/jquery.mobile.transition.pop.css
 
-define( [ "jquery", "../handlers" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, window, undefined ) {
+define(["jquery", "../handlers"], function(jQuery) {
+  //>>excludeEnd("jqmBuildExclude");
+  (function($, window, undefined) {
 
-$.mobile.transitionFallbacks.pop = "fade";
+    $.mobile.transitionFallbacks.pop = "fade";
 
-})( jQuery, this );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  })(jQuery, this);
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

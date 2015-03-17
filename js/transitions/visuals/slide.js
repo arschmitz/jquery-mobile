@@ -8,17 +8,17 @@
 //>>group: Transitions
 //>>css.structure: ../css/structure/jquery.mobile.transition.slide.css
 
-define( [ "jquery", "../handlers" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, window, undefined ) {
+define(["jquery", "../handlers"], function(jQuery) {
+  //>>excludeEnd("jqmBuildExclude");
+  (function($, window, undefined) {
 
-// Use the simultaneous transitions handler for slide transitions
-$.mobile.transitionHandlers.slide = $.mobile.transitionHandlers.simultaneous;
+    // Use the simultaneous transitions handler for slide transitions
+    $.mobile.transitionHandlers.slide = $.mobile.transitionHandlers.simultaneous;
 
-// Set the slide transitions's fallback to "fade"
-$.mobile.transitionFallbacks.slide = "fade";
+    // Set the slide transitions's fallback to "fade"
+    $.mobile.transitionFallbacks.slide = "fade";
 
-})( jQuery, this );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  })(jQuery, this);
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

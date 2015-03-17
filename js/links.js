@@ -3,38 +3,38 @@
 //>>label: Link Classes
 //>>group: Utilities
 
-define( [ "jquery",
-	"./core",
-	"./navigation/path" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+define(["jquery",
+  "./core",
+  "./navigation/path"], function(jQuery) {
+  //>>excludeEnd("jqmBuildExclude");
+  (function($, undefined) {
 
-$.mobile.links = function( target ) {
+    $.mobile.links = function(target) {
 
-	//links within content areas, tests included with page
-	$( target )
-		.find( "a" )
-		.jqmEnhanceable()
-		.filter( ":jqmData(rel='popup')[href][href!='']" )
-		.each( function() {
-			// Accessibility info for popups
-			var element = this,
-				idref = element.getAttribute( "href" ).substring( 1 );
+      //links within content areas, tests included with page
+      $(target)
+        .find("a")
+        .jqmEnhanceable()
+        .filter(":jqmData(rel='popup')[href][href!='']")
+        .each(function() {
+          // Accessibility info for popups
+          var element = this,
+            idref = element.getAttribute("href").substring(1);
 
-			if ( idref ) {
-				element.setAttribute( "aria-haspopup", true );
-				element.setAttribute( "aria-owns", idref );
-				element.setAttribute( "aria-expanded", false );
-			}
-		})
-		.end()
-		.not( ".ui-button, :jqmData(role='none'), :jqmData(role='nojs')" )
-		.addClass( "ui-link" );
+          if (idref) {
+            element.setAttribute("aria-haspopup", true);
+            element.setAttribute("aria-owns", idref);
+            element.setAttribute("aria-expanded", false);
+          }
+        })
+        .end()
+        .not(".ui-button, :jqmData(role='none'), :jqmData(role='nojs')")
+        .addClass("ui-link");
 
-};
+    };
 
-})( jQuery );
+  })(jQuery);
 
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

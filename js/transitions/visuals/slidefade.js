@@ -8,14 +8,14 @@
 //>>group: Transitions
 //>>css.structure: ../css/structure/jquery.mobile.transition.slidefade.css
 
-define( [ "jquery", "../handlers" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, window, undefined ) {
+define(["jquery", "../handlers"], function(jQuery) {
+  //>>excludeEnd("jqmBuildExclude");
+  (function($, window, undefined) {
 
-// Set the slide transitions's fallback to "fade"
-$.mobile.transitionFallbacks.slidefade = "fade";
+    // Set the slide transitions's fallback to "fade"
+    $.mobile.transitionFallbacks.slidefade = "fade";
 
-})( jQuery, this );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  })(jQuery, this);
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

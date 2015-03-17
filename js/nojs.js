@@ -3,18 +3,18 @@
 //>>label: “nojs” Classes
 //>>group: Utilities
 
-define( [
-	"jquery",
-	"./ns"
-], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+define([
+  "jquery",
+  "./ns"
+], function(jQuery) {
+  //>>excludeEnd("jqmBuildExclude");
+  (function($, undefined) {
 
-$.mobile.nojs = function( target ) {
-	$( ":jqmData(role='nojs')", target ).addClass( "ui-nojs" );
-};
+    $.mobile.nojs = function(target) {
+      $(":jqmData(role='nojs')", target).addClass("ui-nojs");
+    };
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+  })(jQuery);
+  //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
 //>>excludeEnd("jqmBuildExclude");

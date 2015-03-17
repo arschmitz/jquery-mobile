@@ -1,5 +1,5 @@
 (function($) {
-  var $w = $( window ), incCreated, created, expected;
+  var $w = $(window), incCreated, created, expected;
 
   created = 0;
   expected = 0;
@@ -8,13 +8,13 @@
     created += 1;
   };
 
-  $( document ).bind( "mobileinit", function() {
-    $w.bind( "controlgroupcreate", incCreated );
+  $(document).bind("mobileinit", function() {
+    $w.bind("controlgroupcreate", incCreated);
     $(function() {
-      expected += $( ":jqmData(role='controlgroup')" ).length;
+      expected += $(":jqmData(role='controlgroup')").length;
     });
 
-    $w.bind( "pagecreate", function() {
+    $w.bind("pagecreate", function() {
       window.createTests = {};
 
       // If the expected count is larger than the actual count by the
