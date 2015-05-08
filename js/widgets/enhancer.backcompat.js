@@ -45,6 +45,9 @@ if ( $.mobileBackcompat !== false ) {
 		};
 
 	$.fn.enhance._filter = filter;
+	$.fn.enhance.defaultProp = function() {
+		return "data-" + $.mobile.ns + "role";
+	};
 	$.fn.enhance.initGenerator = generator;
 
 }

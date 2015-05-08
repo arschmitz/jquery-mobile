@@ -17,7 +17,8 @@
 
 		// AMD. Register as an anonymous module.
 		define( [
-			"jquery" ], factory );
+			"jquery",
+			"jquery-ui/widget" ], factory );
 	} else {
 
 		// Browser globals
@@ -27,7 +28,7 @@
 $.fn.extend( {
 	enhance: function() {
 		var plugin = $.fn.enhance, i,
-			enhancables = this.addBack().find( "[" + plugin.defaultProp + "]" );
+			enhancables = this.addBack().find( "[" + plugin.defaultProp() + "]" );
 
 		if ( plugin._filter ) {
 			enhancables = plugin._filter( enhancables );
@@ -56,11 +57,12 @@ $.extend( $.fn.enhance, {
 
 	_filter: $.fn.enhance._filter || false,
 
-	defaultProp: $.fn.enhance.defaultProp || "data-role",
+	defaultProp: $.fn.enhance.defaultProp || function() { return "data-role"; },
 
 	defaultFunction: function( enhancables ) {
 		enhancables.each( function() {
-			var i, roles = $( this ).attr( "data-role" ).match( /\S+/g ) || [];
+			var i, role = $( this ).attr( $.fn.enhance.defaultProp() ),
+				roles = role ? role.match( /\S+/g ) : [];
 
 			for ( i = 0; i < roles.length; i++ ) {
 				if ( $.fn[ roles[ i ] ] ) {
@@ -71,21 +73,20 @@ $.extend( $.fn.enhance, {
 	},
 	getOptions: function( element ) {
 		var options = {},
-			ns = $.mobile.ns || "";
+			ns = ( $.mobile.ns || "" ).replace( "-", "" );
 
 		$.each( $( element ).data(), function( option, value ) {
-			options[ ns + (
-					!ns ?
-					option :
-					option.charAt( 0 ).toUpperCase() + option.slice( 1 )
-				) ] = value;
+			option = option.replace( ns, "" );
+
+			option = option.charAt( 0 ).toLowerCase() + option.slice( 1 );
+			options[ option ] = value;
 		} );
 
 		return options;
 	}
 } );
 
-if ( $.widget ) {
+if ( $.Widget ) {
 	$.extend( $.Widget.prototype, {
 		_getCreateOptions: function() {
 			var option, value, options = {},
@@ -98,7 +99,6 @@ if ( $.widget ) {
 					options[ option ] = value;
 				}
 			}
-
 			return options;
 		}
 	} );
