@@ -17,99 +17,92 @@
 
 		// AMD. Register as an anonymous module.
 		define( [
-			"jquery",
-			"jquery-ui/widget" ], factory );
+			"jquery" ], factory );
 	} else {
 
 		// Browser globals
 		factory( jQuery );
 	}
 } )( function( $ ) {
+$.fn.extend( {
+	enhance: function() {
+		var plugin = $.fn.enhance, i,
+			enhancables = this.addBack().find( "[" + plugin.defaultProp + "]" );
 
-var plugin = {
-		enhance: function() {
-
-			// Loop over and execute any hooks that exist
-			for ( var i = 0; i < $.fn.enhance.hooks.length; i++ ) {
-				$.fn.enhance.hooks[ i ].apply( this, arguments );
-			}
-
-			// Call the default enhancer function
-			$.fn.enhance.defaultFunction.apply( this, arguments );
-
-			return this;
+		if ( plugin._filter ) {
+			enhancables = plugin._filter( enhancables );
 		}
+
+		// Loop over and execute any hooks that exist
+		for ( i = 0; i < $.fn.enhance.hooks.length; i++ ) {
+			$.fn.enhance.hooks[ i ].call( this, enhancables );
+		}
+
+		// Call the default enhancer function
+		$.fn.enhance.defaultFunction.call( this, enhancables );
+
+		return this;
 	},
-	getNamespace = function() {
-		return $.fn.enhance.ns || $.mobile.ns || "";
-	};
+	enhanceWithin: function() {
+		return this.children().enhance();
+	}
+} );
 
-// Generate the init selector to be used by a widget
-plugin.enhance.initGenerator = function( prototype, ns ) {
-	return "[data-" + ns + "role='" + prototype.widgetName + "']";
-};
+$.extend( $.fn.enhance, {
 
-// Check if the enhancer has already been defined if it has copy its hooks if not
-// define an empty array
-plugin.enhance.hooks = ( $.fn.enhance && $.fn.enhance.hooks ) ? $.fn.enhance.hooks : [];
-plugin.enhance._filter = $.fn.enhance ? $.fn.enhance._filter || false : false;
+	// Check if the enhancer has already been defined if it has copy its hooks if not
+	// define an empty array
+	hooks: $.fn.enhance.hooks ? $.fn.enhance.hooks : [],
 
-// Default function
-plugin.enhance.defaultFunction = function() {
-	var that = this.addBack();
+	_filter: $.fn.enhance._filter || false,
 
-	// Enhance widgets
-	function crawlChildren( _childConstructors ) {
+	defaultProp: $.fn.enhance.defaultProp || "data-role",
 
-		$.each( _childConstructors, function( index, constructor ) {
-			var prototype = constructor.prototype,
-				found = that.find(
-					plugin.enhance.initGenerator( prototype, getNamespace() )
-				);
+	defaultFunction: function( enhancables ) {
+		enhancables.each( function() {
+			var i, roles = $( this ).attr( "data-role" ).match( /\S+/g ) || [];
 
-			if ( plugin.enhance._filter ) {
-				found = plugin.enhance._filter( found );
-			}
-			found[ prototype.widgetName ]();
-			if ( constructor._childConstructors && constructor._childConstructors.length > 0 ) {
-				crawlChildren( constructor._childConstructors );
+			for ( i = 0; i < roles.length; i++ ) {
+				if ( $.fn[ roles[ i ] ] ) {
+					$( this )[ roles[ i ] ]();
+				}
 			}
 		} );
-	}
-	crawlChildren( $.Widget._childConstructors );
-};
+	},
+	getOptions: function( element ) {
+		var options = {},
+			ns = $.mobile.ns || "";
 
-// This is for backcompat remove in 1.6
-plugin.enhanceWithin = function() {
-	return this.children().enhance();
-};
-
-$.extend( $.fn, plugin );
-
-$.extend( $.Widget.prototype, {
-	_getCreateOptions: function() {
-		var option, value,
-
-			// Get all data at once avoid multiple lookups http://jsperf.com/jqm-data-bulk
-			data = this.element.data(),
-			options = {},
-			ns = getNamespace().replace( "-", "" );
-
-		// Translate data-attributes to options
-		for ( option in this.options ) {
-			value = data[ ns + (
-				!ns ?
-				option :
-				option.charAt( 0 ).toUpperCase() + option.slice( 1 )
-			) ];
-			if ( value !== undefined ) {
-				options[ option ] = value;
-			}
-		}
+		$.each( $( element ).data(), function( option, value ) {
+			options[ ns + (
+					!ns ?
+					option :
+					option.charAt( 0 ).toUpperCase() + option.slice( 1 )
+				) ] = value;
+		} );
 
 		return options;
 	}
 } );
 
-return plugin;
+if ( $.widget ) {
+	$.extend( $.Widget.prototype, {
+		_getCreateOptions: function() {
+			var option, value, options = {},
+				dataOptions = $.fn.enhance.getOptions( this.element );
+
+			// Translate data-attributes to options
+			for ( option in this.options ) {
+				value = dataOptions[ option ];
+				if ( value !== undefined ) {
+					options[ option ] = value;
+				}
+			}
+
+			return options;
+		}
+	} );
+}
+
+return $.fn.enhance;
 } );
