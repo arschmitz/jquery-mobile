@@ -44,11 +44,11 @@ if ( $.mobileBackcompat !== false ) {
 				$[ prototype.namespace ][ prototype.widgetName ].prototype.initSelector || false;
 		};
 
-	$.fn.enhance._filter = filter;
-	$.fn.enhance.defaultProp = function() {
+	$.enhance._filter = filter;
+	$.enhance.defaultProp = function() {
 		return "data-" + $.mobile.ns + "role";
 	};
-	$.fn.enhance.initGenerator = generator;
+	$.enhance.initGenerator = generator;
 
 }
 } );

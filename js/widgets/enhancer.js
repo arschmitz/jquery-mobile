@@ -17,52 +17,68 @@
 
 		// AMD. Register as an anonymous module.
 		define( [
-			"jquery",
-			"jquery-ui/widget" ], factory );
+			"jquery" ], factory );
 	} else {
 
 		// Browser globals
 		factory( jQuery );
 	}
 } )( function( $ ) {
+
+var installed = false;
+
 $.fn.extend( {
 	enhance: function() {
-		var plugin = $.fn.enhance, i,
-			enhancables = this.addBack().find( "[" + plugin.defaultProp() + "]" );
-
-		if ( plugin._filter ) {
-			enhancables = plugin._filter( enhancables );
-		}
-
-		// Loop over and execute any hooks that exist
-		for ( i = 0; i < $.fn.enhance.hooks.length; i++ ) {
-			$.fn.enhance.hooks[ i ].call( this, enhancables );
-		}
-
-		// Call the default enhancer function
-		$.fn.enhance.defaultFunction.call( this, enhancables );
-
-		return this;
+		$.enhance.enhance( this );
 	},
 	enhanceWithin: function() {
 		return this.children().enhance();
+	},
+	enhanceOptions: function() {
+		return $.enhance.getOptions( this );
+	},
+	enhanceRoles: function() {
+		return $.enhance.getRoles( this );
 	}
 } );
+$.enhance = $.enhance || {};
+$.extend( $.enhance, {
 
-$.extend( $.fn.enhance, {
+	enhance: function( elem ) {
+		var i,
+			enhancables = elem.addBack().find( "[" + $.enhance.defaultProp() + "]" );
+
+		if ( $.enhance._filter ) {
+			enhancables = $.enhance._filter( enhancables );
+		}
+
+		// Loop over and execute any hooks that exist
+		for ( i = 0; i < $.enhance.hooks.length; i++ ) {
+			$.enhance.hooks[ i ].call( elem, enhancables );
+		}
+
+		// Check if the widget factory exists and if it
+		// does make sure the options extension is installed
+		$.enhance._installWidget();
+
+		// Call the default enhancer function
+		$.enhance.defaultFunction.call( elem, enhancables );
+
+		return elem;
+	},
 
 	// Check if the enhancer has already been defined if it has copy its hooks if not
 	// define an empty array
-	hooks: $.fn.enhance.hooks ? $.fn.enhance.hooks : [],
+	hooks: $.enhance.hooks || [],
 
-	_filter: $.fn.enhance._filter || false,
+	_filter: $.enhance._filter || false,
 
-	defaultProp: $.fn.enhance.defaultProp || function() { return "data-role"; },
+	defaultProp: $.enhance.defaultProp || function() { return "data-role"; },
 
 	defaultFunction: function( enhancables ) {
 		enhancables.each( function() {
-			var i, role = $( this ).attr( $.fn.enhance.defaultProp() ),
-				roles = role ? role.match( /\S+/g ) : [];
+			var i,
+				roles = $( this ).enhanceRoles();
 
 			for ( i = 0; i < roles.length; i++ ) {
 				if ( $.fn[ roles[ i ] ] ) {
@@ -71,9 +87,48 @@ $.extend( $.fn.enhance, {
 			}
 		} );
 	},
+
+	cache: true,
+
+	roleCache: {},
+
+	getRoles: function( element ) {
+		var prop,
+
+			// Look for cached roles
+			roles = $.enhance.roleCache[ !!element[ 0 ].id ? element[ 0 ].id : undefined ];
+
+		// We already have done this returb the roles
+		if( roles ) {
+			return roles;
+		}
+
+		// This is our first time get the attribute and parse it
+		role = $( this ).attr( $.enhance.defaultProp() );
+		roles = role ? role.match( /\S+/g ) : [];
+
+		// Caches the array of roles for next time
+		$.enhance.roleCache[ element[ 0 ].id ] = roles;
+
+		// Return the roles
+		return roles;
+	},
+
+	optionCache: {},
+
 	getOptions: function( element ) {
-		var options = {},
-			ns = ( $.mobile.ns || "" ).replace( "-", "" );
+		var options = $.enhance.optionCache[ !!element[ 0 ].id ? element[ 0 ].id : undefined ],
+			ns;
+
+
+		// Been there done that return what we already found
+		if ( !!options ) {
+			return options;
+		}
+
+		// This is the first time lets compile the options object
+		options = {};
+		ns = ( $.mobile.ns || "" ).replace( "-", "" );
 
 		$.each( $( element ).data(), function( option, value ) {
 			option = option.replace( ns, "" );
@@ -82,27 +137,37 @@ $.extend( $.fn.enhance, {
 			options[ option ] = value;
 		} );
 
+		// Cache the options for next time
+		$.enhance.optionCache[ element[ 0 ].id ] = options;
+
+		// Return the options
 		return options;
+	},
+
+	_installWidget: function() {
+		if ( $.Widget && !installed ) {
+			$.extend( $.Widget.prototype, {
+				_getCreateOptions: function( options ) {
+					var option, value,
+						options = {},
+						dataOptions = this.element.enhanceOptions();
+
+					// Translate data-attributes to options
+					for ( option in this.options ) {
+						value = dataOptions[ option ];
+						if ( value !== undefined ) {
+							options[ option ] = value;
+						}
+					}
+					return options;
+				}
+			} );
+			installed = true;
+		}
 	}
 } );
 
-if ( $.Widget ) {
-	$.extend( $.Widget.prototype, {
-		_getCreateOptions: function() {
-			var option, value, options = {},
-				dataOptions = $.fn.enhance.getOptions( this.element );
+$.enhance._installWidget();
 
-			// Translate data-attributes to options
-			for ( option in this.options ) {
-				value = dataOptions[ option ];
-				if ( value !== undefined ) {
-					options[ option ] = value;
-				}
-			}
-			return options;
-		}
-	} );
-}
-
-return $.fn.enhance;
+return $.enhance;
 } );

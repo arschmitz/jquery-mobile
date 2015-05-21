@@ -29,7 +29,7 @@
 var widgetCrawler = function( elements, _childConstructors ) {
 		$.each( _childConstructors, function( index, constructor ) {
 			var prototype = constructor.prototype,
-				plugin = $.fn.enhance,
+				plugin = $.enhance,
 				selector = plugin.initGenerator( prototype ),
 				found;
 
@@ -49,7 +49,7 @@ var widgetCrawler = function( elements, _childConstructors ) {
 		} );
 	},
 	widgetHook = function() {
-		if ( !$.fn.enhance.initGenerator || !$.Widget ) {
+		if ( !$.enhance.initGenerator || !$.Widget ) {
 			return;
 		}
 
@@ -57,5 +57,5 @@ var widgetCrawler = function( elements, _childConstructors ) {
 		widgetCrawler( this.addBack(), $.Widget._childConstructors );
 	};
 
-return $.fn.enhance.hooks.push( widgetHook );
+return $.enhance.hooks.push( widgetHook );
 } );
