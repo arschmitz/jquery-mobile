@@ -29,10 +29,11 @@ var installed = false;
 
 $.fn.extend( {
 	enhance: function() {
-		$.enhance.enhance( this );
+		return $.enhance.enhance( this );
 	},
 	enhanceWithin: function() {
-		return this.children().enhance();
+		this.children().enhance();
+		return this;
 	},
 	enhanceOptions: function() {
 		return $.enhance.getOptions( this );
@@ -73,7 +74,7 @@ $.extend( $.enhance, {
 
 	_filter: $.enhance._filter || false,
 
-	defaultProp: $.enhance.defaultProp || function() { return "data-role"; },
+	defaultProp: $.enhance.defaultProp || function() { return "[data-role]"; },
 
 	defaultFunction: function( enhancables ) {
 		enhancables.each( function() {
@@ -93,18 +94,25 @@ $.extend( $.enhance, {
 	roleCache: {},
 
 	getRoles: function( element ) {
+
+		console.log( element );
+
+		if( !element.length ) {
+			return [];
+		}
+
 		var prop,
 
 			// Look for cached roles
 			roles = $.enhance.roleCache[ !!element[ 0 ].id ? element[ 0 ].id : undefined ];
 
-		// We already have done this returb the roles
+		// We already have done this return the roles
 		if( roles ) {
 			return roles;
 		}
 
 		// This is our first time get the attribute and parse it
-		role = $( this ).attr( $.enhance.defaultProp() );
+		role = element.attr( $.enhance.defaultProp() );
 		roles = role ? role.match( /\S+/g ) : [];
 
 		// Caches the array of roles for next time
