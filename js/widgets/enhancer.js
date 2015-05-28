@@ -94,20 +94,17 @@ $.extend( $.enhance, {
 	roleCache: {},
 
 	getRoles: function( element ) {
-
-		console.log( element );
-
-		if( !element.length ) {
+		if ( !element.length ) {
 			return [];
 		}
 
-		var prop,
+		var role,
 
 			// Look for cached roles
 			roles = $.enhance.roleCache[ !!element[ 0 ].id ? element[ 0 ].id : undefined ];
 
 		// We already have done this return the roles
-		if( roles ) {
+		if ( roles ) {
 			return roles;
 		}
 
@@ -127,7 +124,6 @@ $.extend( $.enhance, {
 	getOptions: function( element ) {
 		var options = $.enhance.optionCache[ !!element[ 0 ].id ? element[ 0 ].id : undefined ],
 			ns;
-
 
 		// Been there done that return what we already found
 		if ( !!options ) {
@@ -157,8 +153,9 @@ $.extend( $.enhance, {
 			$.extend( $.Widget.prototype, {
 				_getCreateOptions: function( options ) {
 					var option, value,
-						options = {},
 						dataOptions = this.element.enhanceOptions();
+
+					options = options || {};
 
 					// Translate data-attributes to options
 					for ( option in this.options ) {
