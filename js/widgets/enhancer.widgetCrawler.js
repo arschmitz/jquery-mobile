@@ -18,6 +18,7 @@
 		// AMD. Register as an anonymous module.
 		define( [
 			"jquery",
+			"../core",
 			"widgets/enhancer" ], factory );
 	} else {
 
@@ -42,6 +43,7 @@ var widgetCrawler = function( elements, _childConstructors ) {
 			if ( plugin._filter ) {
 				found = plugin._filter( found );
 			}
+
 			found[ prototype.widgetName ]();
 			if ( constructor._childConstructors && constructor._childConstructors.length > 0 ) {
 				widgetCrawler( elements, constructor._childConstructors );

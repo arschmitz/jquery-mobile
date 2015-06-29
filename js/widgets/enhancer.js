@@ -53,14 +53,14 @@ $.extend( $.enhance, {
 			enhancables = $.enhance._filter( enhancables );
 		}
 
+		// Check if the widget factory exists and if it
+		// does make sure the options extension is installed
+		$.enhance._installWidget();
+
 		// Loop over and execute any hooks that exist
 		for ( i = 0; i < $.enhance.hooks.length; i++ ) {
 			$.enhance.hooks[ i ].call( elem, enhancables );
 		}
-
-		// Check if the widget factory exists and if it
-		// does make sure the options extension is installed
-		$.enhance._installWidget();
 
 		// Call the default enhancer function
 		$.enhance.defaultFunction.call( elem, enhancables );
@@ -74,7 +74,7 @@ $.extend( $.enhance, {
 
 	_filter: $.enhance._filter || false,
 
-	defaultProp: $.enhance.defaultProp || function() { return "[data-role]"; },
+	defaultProp: $.enhance.defaultProp || function() { return "data-role"; },
 
 	defaultFunction: function( enhancables ) {
 		enhancables.each( function() {
