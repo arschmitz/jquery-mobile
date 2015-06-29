@@ -23,9 +23,9 @@
 			"jquery",
 			"../../core",
 			"../../widget",
+			"./button",
 			"../widget.theme",
-			"checkboxradio",
-			"checkboxradio.backcompat" ], factory );
+			"../widget.backcompat" ], factory );
 	} else {
 
 		// Browser globals
