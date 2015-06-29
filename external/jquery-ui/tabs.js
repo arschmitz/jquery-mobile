@@ -32,7 +32,7 @@
 	}
 }( function( $ ) {
 
-return $.widget( "ui.tabs", {
+$.widget( "ui.tabs", {
 	version: "button-fixup",
 	delay: 300,
 	options: {
@@ -233,7 +233,7 @@ return $.widget( "ui.tabs", {
 		// Ctrl+up moves focus to the current tab
 		if ( event.ctrlKey && event.keyCode === $.ui.keyCode.UP ) {
 			event.preventDefault();
-			this.active.focus();
+			this.active.trigger( "focus" );
 		}
 	},
 
@@ -271,7 +271,7 @@ return $.widget( "ui.tabs", {
 
 	_focusNextTab: function( index, goingForward ) {
 		index = this._findNextTab( index, goingForward );
-		this.tabs.eq( index ).focus();
+		this.tabs.eq( index ).trigger( "focus" );
 		return index;
 	},
 
@@ -394,7 +394,7 @@ return $.widget( "ui.tabs", {
 
 		// Prevent users from focusing disabled tabs via click
 		this.tablist
-			.delegate( "> li", "mousedown" + this.eventNamespace, function( event ) {
+			.on( "mousedown" + this.eventNamespace, "> li", function( event ) {
 				if ( $( this ).is( ".ui-state-disabled" ) ) {
 					event.preventDefault();
 				}
@@ -406,7 +406,7 @@ return $.widget( "ui.tabs", {
 			// We don't have to worry about focusing the previously focused
 			// element since clicking on a non-focusable element should focus
 			// the body anyway.
-			.delegate( ".ui-tabs-anchor", "focus" + this.eventNamespace, function() {
+			.on( "focus" + this.eventNamespace, ".ui-tabs-anchor", function() {
 				if ( $( this ).closest( "li" ).is( ".ui-state-disabled" ) ) {
 					this.blur();
 				}
@@ -417,7 +417,7 @@ return $.widget( "ui.tabs", {
 				role: "tab",
 				tabIndex: -1
 			} );
-		this._addClass( this.tabs, "ui-tab", "ui-state-default" );
+		this._addClass( this.tabs, "ui-tabs-tab", "ui-state-default" );
 
 		this.anchors = this.tabs.map( function() {
 			return $( "a", this )[ 0 ];
@@ -481,7 +481,7 @@ return $.widget( "ui.tabs", {
 
 	// allow overriding how to find the list for rare usage scenarios (#7715)
 	_getList: function() {
-		return this.tablist || this.element.find( "ol,ul" ).eq( 0 );
+		return this.tablist || this.element.find( "ol, ul" ).eq( 0 );
 	},
 
 	_createPanel: function( id ) {
@@ -713,7 +713,7 @@ return $.widget( "ui.tabs", {
 	_getIndex: function( index ) {
 		// meta-function to give users option to provide a href string instead of a numerical index.
 		if ( typeof index === "string" ) {
-			index = this.anchors.index( this.anchors.filter( "[href$='" + index + "']" ) );
+			index = this.anchors.index( this.anchors.filter( "[href$='" + $.ui.escapeSelector( index ) + "']" ) );
 		}
 
 		return index;
@@ -726,7 +726,7 @@ return $.widget( "ui.tabs", {
 
 		this.tablist
 			.removeAttr( "role" )
-			.unbind( this.eventNamespace );
+			.off( this.eventNamespace );
 
 		this.anchors
 			.removeAttr( "role tabIndex" )
@@ -879,5 +879,20 @@ return $.widget( "ui.tabs", {
 		return this.element.find( this._sanitizeSelector( "#" + id ) );
 	}
 } );
+
+// DEPRECATED
+// TODO: Switch return back to widget declaration at top of file when this is removed
+if ( $.uiBackCompat !== false ) {
+
+	// Backcompat for ui-tab class (now ui-tabs-tab)
+	$.widget( "ui.tabs", $.ui.tabs, {
+		_processTabs: function() {
+			this._superApply( arguments );
+			this._addClass( this.tabs, "ui-tab" );
+		}
+	} );
+}
+
+return $.ui.tabs;
 
 } ) );
